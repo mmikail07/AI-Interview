@@ -1,12 +1,3 @@
-"""Tests that run fully offline (no Ollama required).
-
-We monkeypatch the OllamaClient so the suite exercises:
-  * the typed /chat contract end-to-end,
-  * follow-up context merging ("show cheaper ones"),
-  * the rule-based fallback path when the LLM raises,
-  * deterministic tool output.
-"""
-
 import pytest
 from fastapi.testclient import TestClient
 
