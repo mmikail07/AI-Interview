@@ -61,14 +61,13 @@ ai-support-assistant/
 ## Run the backend
 
 ```bash
-# 1. pull a model once (needs internet this one time)
+# 1. pull a model once 
 ollama pull llama3.1
 
 # 2. install and run
 cd backend
 python -m venv .venv
-.venv\Scripts\activate          # Windows
-# source .venv/bin/activate     # macOS / Linux
+.venv\Scripts\activate         
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
@@ -81,11 +80,6 @@ APP_OLLAMA_BASE_URL=http://localhost:11434
 APP_OLLAMA_MODEL=llama3.1
 APP_MAX_HISTORY_TURNS=5
 ```
-
-The first message after Ollama starts cold-loads the model, which can take about
-a minute on CPU; later messages are fast. `request_timeout` defaults to 120s to
-cover that — if Ollama is down or slower than the timeout, the request still
-returns valid JSON through the rule-based fallback.
 
 Run the tests (these mock Ollama, so they pass without a model):
 
@@ -163,26 +157,12 @@ and just applies `sort=price_asc`.
 
 Other endpoints:
 
-- `POST /chat/stream` — same result, streamed as Server-Sent Events (status
-  stages then the final payload).
 - `POST /reset?conversation_id=...` — clear a conversation's memory.
 - `GET /health` — liveness and whether Ollama is reachable.
 
-## Intents and UI types
-
-| Intent | Tool | ui_type | Widget |
-| --- | --- | --- | --- |
-| order_tracking | tracking_tool | order_status | OrderStatusWidget |
-| refund_request | refund_tool | refund_status | InfoCardWidget |
-| complaint | complaint_tool | complaint_ack | InfoCardWidget |
-| escalation | escalation_tool | escalation | InfoCardWidget |
-| hotel_search | hotel_tool | hotel_list | HotelWidget |
-| flight_search | flight_tool | flight_list | FlightWidget |
-| other | — | text | plain bubble |
-
 ## Design notes
 
-- **One source of truth for the contract.** Every response is a Pydantic
+- Every response is a Pydantic
   `ChatResponse`, and intents map to `ui_type` through a single table
   (`INTENT_TO_UI`). The client never parses loose maps.
 - **Deterministic routing.** The model is asked for structured output via
@@ -199,7 +179,7 @@ Other endpoints:
 ## Offline note
 
 The mock hotel data uses remote placeholder image URLs. With no internet the
-images simply fall back to a local icon — everything else works offline.
+images simply fall back to a local icon, but everything else works offline.
 
 ## Screenshots
 
