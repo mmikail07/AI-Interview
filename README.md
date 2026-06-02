@@ -15,3 +15,4 @@ For flutter, it is not 1 to 1 but there should be a similarity within the apps, 
 
 Ollama should be used since it should be offline and local, meaning it is good for prototyping and easy to use.
 
+To ensure there is no false injection of data into the model, I make sure to trust only the system message or the rule thats set, and anything else should be untrusted.
