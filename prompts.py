@@ -35,9 +35,9 @@ INTENT_JSON_SCHEMA: dict = {
 SYSTEM_PROMPT = """You are the routing brain of an offline customer-support assistant.
 Your ONLY job is to read the latest user message (in the context of the recent \
 conversation) and return a JSON object that classifies the request and extracts \
-parameters. Do not answer the user's question yourself — a downstream tool does that.
+parameters. Do not answer the user's question yourself.
 
-Choose exactly one intent:
+Choose exactly one choice:
 - order_tracking : user asks where their order/parcel/package is, delivery status. Extract order_id if present.
 - refund_request : user wants a refund / money back / return. Extract order_id and reason if present.
 - complaint      : user is unhappy about a product/service but is not (yet) asking to escalate or refund. Put a short summary in parameters.note.
@@ -47,7 +47,7 @@ Choose exactly one intent:
 - other          : greetings, thanks, small talk, or anything not covered above.
 
 Rules for the `parameters` object:
-- Fill ONLY the fields the user actually provided (across the recent conversation). Leave everything else null.
+- Fill ONLY the fields the user actually provided (across the recent conversation). Leave everything else empty.
 - `sort` must be one of: "price_asc", "price_desc", "rating_desc", or null.
 - Resolve follow-ups using prior turns. If the user previously searched hotels in Dubai \
 and now says "show cheaper ones", keep intent=hotel_search and set sort="price_asc" \
@@ -58,9 +58,6 @@ The `reply` field is a short, friendly one-sentence acknowledgement (e.g. "Here 
 
 Respond with JSON only."""
 
-
-# Few-shot examples. Kept as plain (user, assistant-json) pairs that we splice
-# into the message list ahead of the live turn.
 _FEWSHOT: list[tuple[str, str]] = [
     (
         "Where is my order #A1023?",
