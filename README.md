@@ -11,7 +11,7 @@ Since Ollama was not working I left it as it is, my python interpreter on vscode
 
 To ensure the outputs were structured, we use pydantic for schema validation.
 
-For flutter, it is not 1 to 1 but there should be a similarity within the apps, however my flutter is not working. 
+For flutter, it is not 1 to 1 but there should be a similarity within the apps, however my flutter is not working, hence I could not add screenshots.
 
 Ollama should be used since it should be offline and local, meaning it is good for prototyping and easy to use.
 
