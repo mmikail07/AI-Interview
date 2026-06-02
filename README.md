@@ -24,32 +24,17 @@ classifier takes over so the endpoint always responds with valid JSON.
 ## Project layout
 
 ```
-ai-support-assistant/
-├─ backend/
-│  ├─ app/
-│  │  ├─ main.py            # FastAPI routes: /chat, /chat/stream, /reset, /health
-│  │  ├─ schemas.py         # Pydantic request/response models (the API contract)
-│  │  ├─ config.py          # env-overridable settings (APP_ prefix)
-│  │  ├─ memory.py          # in-memory short-term conversation store
-│  │  ├─ llm/
-│  │  │  ├─ ollama_client.py   # async client for the local Ollama REST API
-│  │  │  └─ prompts.py         # system prompt, few-shot, JSON schema
-│  │  ├─ services/
-│  │  │  ├─ intent_service.py  # LLM classify + rule-based fallback
-│  │  │  └─ chat_service.py    # orchestration + follow-up context merge
-│  │  └─ tools/
-│  │     └─ mock_tools.py      # the six mock tools + intent->tool registry
-│  ├─ tests/test_chat.py    # offline tests (Ollama mocked)
-│  ├─ requirements.txt
-│  └─ Dockerfile
-├─ frontend/
-│  └─ lib/
-│     ├─ main.dart          # chat screen
-│     ├─ models/            # ChatResponse / ChatMessage
-│     ├─ services/          # http client
-│     ├─ state/             # ChatProvider (provider package)
-│     └─ widgets/           # widget_factory + hotel/flight/order/info widgets
-└─ docker-compose.yml       # Ollama + backend together
+backend/app/
+  main.py      routes (/chat, /health, ...)
+  schemas.py   typed API contract
+  config.py    settings
+  memory.py    short-term conversation memory
+  llm/         Ollama client + prompts
+  services/    intent classification + chat orchestration
+  tools/       six mock tools + registry
+frontend/lib/
+  models/ services/ state/ widgets/
+screenshots/   README images
 ```
 
 ## Prerequisites
